@@ -7,7 +7,7 @@ import java.util.ArrayList;
 //A repair is basically a report about a defect device. besides information on what happened, it also contains the needed spare parts.
 public class Repair {
     protected final Integer repairID;
-    protected final int deviceID;
+    //protected final int deviceID;
     protected final String repairCause;
     protected String repairSolution;
     protected final String repairInformation;

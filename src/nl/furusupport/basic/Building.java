@@ -9,20 +9,25 @@ public class Building {
     private final int buildingID;
     private final Randomnator IdGenerator;
     // private ArrayList buildingRooms;
-    private ArrayList<Device> buildingDevices;
-    private ArrayList<Part> buildingPartsWarehouse;
+
+
+    private ArrayList<Device> buildingDevices;  //move?
+    //private ArrayList<Part> buildingPartsWarehouse;     //move?
+
+
     private ArrayList returnList;
 
+
     private int newRandomID;
-    private Device newDevice;
-    private Part newPart;
+    private Device newDevice;       //needed for initiation?
+
 
 
     public Building(String buildingName) {
         IdGenerator = new Randomnator();
 
         buildingDevices = new ArrayList<>();
-        buildingPartsWarehouse = new ArrayList<>();
+        //buildingPartsWarehouse = new ArrayList<>();
         returnList = new ArrayList();
 
         this.buildingName = buildingName;
@@ -37,19 +42,13 @@ public class Building {
         buildingDevices.add(newDevice);
     }
 
-    public void addPart(String partName, String partSupplierNumber, String partInfo){
-
-        newRandomID = IdGenerator.RandomnizerInt();
-        newPart = new Part(partName, newRandomID, partSupplierNumber, partInfo);
-        buildingPartsWarehouse.add(newPart);
-    }
 
     public ArrayList getOverview (int whichList) {
 
         if (whichList == 1) {
             returnList = buildingDevices;
         } else if (whichList == 2) {
-            returnList = buildingPartsWarehouse;
+            returnList = ;
         }
         return returnList;
     }
