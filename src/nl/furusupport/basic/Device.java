@@ -7,14 +7,18 @@ public class Device {
     private final String deviceName;
     private final int deviceID;
     private final String deviceLocation;
-    private ArrayList<Repair> deviceRepairs;
+    private final ArrayList<Repair> deviceRepairs;
 
-    public Device(String deviceName, int deviceID, String deviceLocation){
+    private final Randomnator IdGenerator;
+
+    public Device(String deviceName, String deviceLocation){
+        IdGenerator = new Randomnator();
+
         this.deviceName = deviceName;
-        this.deviceID = deviceID;
+        this.deviceID = IdGenerator.RandomnizerInt();
         this.deviceLocation = deviceLocation;
 
-        deviceRepairs = new ArrayList<Repair>();
+        deviceRepairs = new ArrayList<>();
     }
 
     @Override

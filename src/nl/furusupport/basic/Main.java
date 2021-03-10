@@ -12,8 +12,8 @@ public class Main {
 
         System.out.println("RepairManager 2021");
 
-        plazaTheatre.addDevice("Xerox Altalink B8100", "ReproRoom");
-        plazaTheatre.addDevice("Cisco Telephone", "Reception");
+        plazaTheatre.addDeviceToStore(new Device ("Xerox Altalink B8100", "ReproRoom"));
+        plazaTheatre.addDeviceToStore(new Device ("Cisco Telephone", "Reception"));
 
         printLister = plazaTheatre.getOverview(1);
 
@@ -23,14 +23,16 @@ public class Main {
 
         System.out.println("Parts\n");
 
-        plazaTheatre.addPart("Screw", "Xo7987", "only if you're screwed");
-        plazaTheatre.addPart("Cat5 cable", "C5-EX", "Basically just the stuff!");
+        plazaTheatre.addPartToWarehouse(new Part("Screw", "Xo7987", "only if you're screwed"));
+        plazaTheatre.addPartToWarehouse(new Part("Cat5 cable", "C5-EX", "Basically just the stuff!"));
 
         printLister = plazaTheatre.getOverview(2);
 
         for (Object dataPrinter : printLister) {
             System.out.println(dataPrinter.toString());
         }
+
+        System.out.println("\n\n" + plazaTheatre.toString());
 
 
 
