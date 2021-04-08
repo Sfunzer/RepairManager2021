@@ -7,16 +7,12 @@ public class Part {
     private final String partSupplierNumber;
     private final String partInfo;
 
-    private final Randomnator IdGenerator;
-
 
     public Part (String partName, String partSupplierNumber, String partInfo){
-        IdGenerator = new Randomnator();
-
-
+        Randomnator idGenerator = new Randomnator();
 
         this.partName = partName;
-        this.partNumber = IdGenerator.RandomnizerInt();
+        this.partNumber = idGenerator.RandomnizerInt();
         this.partSupplierNumber = partSupplierNumber;
         this.partInfo = partInfo;
 

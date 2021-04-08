@@ -2,6 +2,9 @@ package nl.furusupport.basic;
 
 //A building contains everything related to repairs: The devices that may be broken, the parts needed to repair them. and the information about the repair itself
 
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Building {
@@ -9,16 +12,18 @@ public class Building {
     private final int buildingID;
     private final Randomnator IdGenerator;
 
-    private final DeviceStore plazaDeviceStore;
+    private LocalDate dateCheck;
+
+    private final List<Device> plazaDeviceStore;
     private final PartsWarehouse plazaPartsWarehouse;
 
-    private ArrayList returnList;
+    private List returnList;
 
 
     public Building(String buildingName) {
         IdGenerator = new Randomnator();
 
-        plazaDeviceStore  = new DeviceStore();
+        plazaDeviceStore  = new ArrayList<>();
         plazaPartsWarehouse = new PartsWarehouse();
         returnList = new ArrayList();
 
@@ -33,17 +38,25 @@ public class Building {
 
 
     public void addDeviceToStore(Device newDevice){
-        plazaDeviceStore.addDevice(newDevice);
+        dateCheck = java.time.LocalDate.now();
+
+        for (Device deviceChecker:plazaDeviceStore) {
+            if(deviceChecker.)
+        }
+
+
+
+                plazaDeviceStore.add(newDevice);
     }
 
-    public ArrayList getOverview (int whichList) {
+    public List getOverview (int whichList) {
 
         if (whichList == 1) {
-            returnList = plazaDeviceStore.getBuildingDevices();
+            returnList = plazaDeviceStore;
         } else if (whichList == 2) {
             returnList = plazaPartsWarehouse.getBuildingPartsWarehouse();
         }
-        return returnList;
+        return Collections.unmodifiableList(returnList);
     }
 
     @Override
