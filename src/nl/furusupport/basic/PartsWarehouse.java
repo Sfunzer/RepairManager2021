@@ -1,9 +1,11 @@
 package nl.furusupport.basic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class PartsWarehouse {
-    private final ArrayList<Part> buildingPartsWarehouse;
+    private final List<Part> buildingPartsWarehouse;
 
     public PartsWarehouse () {
         buildingPartsWarehouse = new ArrayList<>();
@@ -14,9 +16,8 @@ public class PartsWarehouse {
     }
 
 
-    public ArrayList<Part> getBuildingPartsWarehouse() {
-        return buildingPartsWarehouse;
+    public List<Part> getBuildingPartsWarehouse() {
+        return Collections.unmodifiableList(buildingPartsWarehouse);
     }
-
 
 }
