@@ -5,7 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-//A repair is basically a report about a defect device. besides information on what happened, it also contains the needed spare parts.
+//A repair is basically a report about a defect device. besides information on what happened, it also contains the needed and/or used spare parts.
 public class Repair {
     private final Integer repairID;
     //private final int deviceID;

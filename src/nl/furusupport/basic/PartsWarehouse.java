@@ -1,5 +1,7 @@
 package nl.furusupport.basic;
 
+//PartsWarehouse contains the available parts for repairs.
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

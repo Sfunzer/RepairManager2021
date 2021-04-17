@@ -1,6 +1,6 @@
 package nl.furusupport.basic;
 
-//A building contains everything related to repairs: The devices that may be broken, the parts needed to repair them. and the information about the repair itself
+//A building contains all devices installed. Repairs are kept within a device.
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -12,19 +12,17 @@ public class Building {
     private final int buildingID;
     private final Randomnator IdGenerator;
 
-    private LocalDate dateCheck;
-
-    private final List<Device> plazaDeviceStore;
-    private final PartsWarehouse plazaPartsWarehouse;
+    private final List<Device> buildingDeviceStore;
+    private final PartsWarehouse buildingPartsWarehouse;
 
     private List returnList;
 
-
+    //Class constructor
     public Building(String buildingName) {
         IdGenerator = new Randomnator();
 
-        plazaDeviceStore  = new ArrayList<>();
-        plazaPartsWarehouse = new PartsWarehouse();
+        buildingDeviceStore = new ArrayList<>();
+        buildingPartsWarehouse = new PartsWarehouse();
         returnList = new ArrayList();
 
         this.buildingName = buildingName;
@@ -32,29 +30,63 @@ public class Building {
 
     }
 
+    //Adding parts to partswarehouse
     public void addPartToWarehouse(Part newPart){
-        plazaPartsWarehouse.addPart(newPart);
+        buildingPartsWarehouse.addPart(newPart);
     }
 
+    /*Adding a device to the digital device storage. When adding a device, the system checks if the device isn't already in the system, of if it's life expectations are already exceeded.
+    if so, the system will return a string message which will inform you of what is wrong.
 
-    public void addDeviceToStore(Device newDevice){
-        dateCheck = java.time.LocalDate.now();
+    TODO Method contains duplicate code which i'm quite sure is not necessary.
+     */
+    public String addDeviceToStore(Device newDevice) {
+        LocalDate dateCheck = LocalDate.now();
 
-        for (Device deviceChecker:plazaDeviceStore) {
-            if(deviceChecker.)
+        String returnMessage;
+        if (buildingDeviceStore.size() == 0){
+
+            if (newDevice.getDeviceEOL().isBefore(dateCheck)) {
+                returnMessage = "device passed E.O.L.";
+                return returnMessage;
+            } else if (newDevice.getDeviceAgeDays() >= newDevice.getDeviceLifeSpan()){
+                returnMessage = "device passed LifeSpan.";
+                return returnMessage;
+            }
+
+            buildingDeviceStore.add(newDevice);
+            returnMessage = "device stored";
+
+
+        } else {
+
+            for (Device deviceChecker : buildingDeviceStore) {
+                if (deviceChecker.getDeviceSerial().equals(newDevice.getDeviceSerial())) {
+                    returnMessage = "serial Already in system";
+                    return returnMessage;
+                } else if (newDevice.getDeviceEOL().isBefore(dateCheck)){
+                    returnMessage = "device passed E.O.L.";
+                    return returnMessage;
+                } else if (newDevice.getDeviceAgeDays() >= newDevice.getDeviceLifeSpan()){
+                    returnMessage = "device passed LifeSpan.";
+                    return returnMessage;
+                }
+
+            }
+            returnMessage = "device stored";
+            buildingDeviceStore.add(newDevice);
         }
 
-
-
-                plazaDeviceStore.add(newDevice);
+        return returnMessage;
     }
 
+    //a simple method to choose which list you want to return for viewing.
     public List getOverview (int whichList) {
 
         if (whichList == 1) {
-            returnList = plazaDeviceStore;
+            returnList = buildingDeviceStore;
         } else if (whichList == 2) {
-            returnList = plazaPartsWarehouse.getBuildingPartsWarehouse();
+            returnList = buildingPartsWarehouse.getBuildingPartsWarehouse();
         }
         return Collections.unmodifiableList(returnList);
     }
@@ -65,8 +97,8 @@ public class Building {
                 "buildingName='" + buildingName + '\'' +
                 ", buildingID=" + buildingID +
                 ", IdGenerator=" + IdGenerator +
-                ", plazaDeviceStore=" + plazaDeviceStore +
-                ", plazaPartsWarehouse=" + plazaPartsWarehouse +
+                ", plazaDeviceStore=" + buildingDeviceStore +
+                ", plazaPartsWarehouse=" + buildingPartsWarehouse +
                 ", returnList=" + returnList +
                 '}';
     }
