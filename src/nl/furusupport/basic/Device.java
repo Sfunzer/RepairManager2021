@@ -19,25 +19,44 @@ public class Device {
     private final List<Repair> deviceRepairs;
 
     public Device(String deviceName, String deviceSerial, int deviceAgeDays, int deviceLifeSpan, LocalDate deviceEOL,  String deviceLocation){
+        //DeviceID generator.
         Randomnator idGenerator = new Randomnator();
 
+        //basic device details
         this.deviceName = deviceName;
         this.deviceSerial = deviceSerial;
 
+        //lifecycle info for this device
         this.deviceAgeDays = deviceAgeDays;
         this.deviceLifeSpan = deviceLifeSpan;
         this.deviceEOL = deviceEOL;
 
+        //storage data for this device
         this.deviceID = idGenerator.RandomnizerInt();
         this.deviceLocation = deviceLocation;
 
+        //List with device repairs.
         deviceRepairs = new ArrayList<>();
     }
 
-    public void addRepair(Repair newRepair) {
+    //method used for adding a repair. Before adding, it checks device EOL date and Lifespan statistic, so if device is better of replacing, it'll let you know.
+    public String addRepair(Repair newRepair) {
+        LocalDate dateCheck = LocalDate.now();
+        String returnMessage;
+        if (deviceEOL.isBefore(dateCheck) || deviceAgeDays >= deviceLifeSpan){
+                returnMessage = "Device is not viable anymore. please replace!";
+                return returnMessage;
+            }
+        if (deviceRepairs.size() != 0){
+            returnMessage = "there are " + deviceRepairs.size() + " repairs linked to this device. Please check these while we add your repair for now";
+            deviceRepairs.add(newRepair);
+            return returnMessage;
+        }
         deviceRepairs.add(newRepair);
-
+        returnMessage = "repair added";
+        return returnMessage;
     }
+
 
     public int getDeviceID() {
         return deviceID;

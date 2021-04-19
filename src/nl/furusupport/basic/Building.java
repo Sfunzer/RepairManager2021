@@ -80,16 +80,43 @@ public class Building {
         return returnMessage;
     }
 
+
+
+    //method to add a repair. Repairs are stored within devices, so they are always linked.
+    public String addRepairToDevice( String deviceSerial, Repair newDevicerepair) {
+        String returnMessage = "nothing happened yet";
+        for (Device whichDevice:buildingDeviceStore) {
+            if (whichDevice.getDeviceSerial().equals(deviceSerial)) {
+                returnMessage = whichDevice.addRepair(newDevicerepair);
+            }
+        }
+        return  returnMessage;
+    }
+
+
+
     //a simple method to choose which list you want to return for viewing.
-    public List getOverview (int whichList) {
+    public List getOverview (int whichList, String deviceSerial) {
 
         if (whichList == 1) {
             returnList = buildingDeviceStore;
         } else if (whichList == 2) {
             returnList = buildingPartsWarehouse.getBuildingPartsWarehouse();
+        } else if (whichList == 3) {
+
+            for (Device storedDevice:buildingDeviceStore) {
+                /*returnList = new ArrayList();
+                TODO find a way to erase list when starting this part of the method
+
+                 */
+                if (storedDevice.getDeviceSerial().equals(deviceSerial)){
+                    returnList = storedDevice.getDeviceRepairs();
+                }
+            }
         }
         return Collections.unmodifiableList(returnList);
     }
+
 
     @Override
     public String toString() {
