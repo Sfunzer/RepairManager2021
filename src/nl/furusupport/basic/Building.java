@@ -2,12 +2,13 @@ package nl.furusupport.basic;
 
 //A building contains all devices installed. Repairs are kept within a device.
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Building {
+public class Building implements writeCSV, readCSV {
     private final String buildingName;
     private final int buildingID;
     private final Randomnator IdGenerator;
@@ -118,6 +119,8 @@ public class Building {
     }
 
 
+
+
     @Override
     public String toString() {
         return "Building{" +
@@ -128,5 +131,69 @@ public class Building {
                 ", plazaPartsWarehouse=" + buildingPartsWarehouse +
                 ", returnList=" + returnList +
                 '}';
+    }
+
+    @Override
+    public void writeCSV() throws IOException {
+
+        FileWriter csvWriter = new FileWriter(buildingName + "devices.csv");
+
+        //ToDo decise what to do with stuff below.
+
+        /*  csvWriter.append("Name");
+        csvWriter.append(",");
+        csvWriter.append("ID");
+        csvWriter.append(",");
+        csvWriter.append("Serial");
+        csvWriter.append(",");
+        csvWriter.append("AgeDays");
+        csvWriter.append(",");
+        csvWriter.append("LifeSpan");
+        csvWriter.append(",");
+        csvWriter.append("EOL");
+        csvWriter.append(",");
+        csvWriter.append("Location");
+        csvWriter.append("\n");
+
+
+       */
+        for (Object dataInsertert : buildingDeviceStore) {
+            csvWriter.append(dataInsertert.toString());
+            csvWriter.append("\n");
+        }
+
+        csvWriter.flush();
+        csvWriter.close();
+
+    }
+
+
+    @Override
+    public void readCSV() throws IOException {
+        String fileName = buildingName + "devices.csv";
+        String row;
+        String[] data;
+        Device dataInput;
+
+        File csvFile = new File(fileName);
+        if (csvFile.isFile()) {
+            // create BufferedReader and read data from csv
+            BufferedReader csvReader = new BufferedReader(new FileReader(fileName));
+            while ((row = csvReader.readLine()) != null) {
+                data = row.split(",");
+
+                dataInput = new Device(
+                        data[0],
+                        Integer.parseInt(data[1]),
+                        data[2],
+                        Integer.parseInt(data[3]),
+                        Integer.parseInt(data[4]),
+                        LocalDate.parse(data[5]),
+                        data[6]);
+                buildingDeviceStore.add(dataInput);
+
+            }
+            csvReader.close();
+        }
     }
 }

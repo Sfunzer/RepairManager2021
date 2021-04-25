@@ -18,9 +18,8 @@ public class Device {
     private final String deviceLocation;
     private final List<Repair> deviceRepairs;
 
-    public Device(String deviceName, String deviceSerial, int deviceAgeDays, int deviceLifeSpan, LocalDate deviceEOL,  String deviceLocation){
+    public Device(String deviceName, int deviceID, String deviceSerial, int deviceAgeDays, int deviceLifeSpan, LocalDate deviceEOL,  String deviceLocation){
         //DeviceID generator.
-        Randomnator idGenerator = new Randomnator();
 
         //basic device details
         this.deviceName = deviceName;
@@ -32,7 +31,7 @@ public class Device {
         this.deviceEOL = deviceEOL;
 
         //storage data for this device
-        this.deviceID = idGenerator.RandomnizerInt();
+        this.deviceID = deviceID;
         this.deviceLocation = deviceLocation;
 
         //List with device repairs.
@@ -56,7 +55,6 @@ public class Device {
         returnMessage = "repair added";
         return returnMessage;
     }
-
 
     public int getDeviceID() {
         return deviceID;
@@ -84,10 +82,31 @@ public class Device {
 
     @Override
     public String toString() {
-        return "Device{" +
+
+        //ToDo rework toString format so it will nicely work with .csv read/write
+        /*return "Device{" +
                 "deviceName='" + deviceName + '\'' +
                 ", deviceID=" + deviceID +
+                ", deviceSerial='" + deviceSerial + '\'' +
+                ", deviceAgeDays=" + deviceAgeDays +
+                ", deviceLifeSpan=" + deviceLifeSpan +
+                ", deviceEOL=" + deviceEOL +
                 ", deviceLocation='" + deviceLocation + '\'' +
+                //", deviceRepairs=" + deviceRepairs +
                 '}';
+
+
+         */
+       // return deviceName + " " + deviceID  + ""
+
+        return deviceName + ',' +
+                deviceID + ',' +
+                deviceSerial + ',' +
+                deviceAgeDays + ',' +
+                deviceLifeSpan + ',' +
+                deviceEOL + ',' +
+                deviceLocation
+                ;
     }
+
 }
