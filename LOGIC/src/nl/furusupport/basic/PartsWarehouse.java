@@ -7,19 +7,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class PartsWarehouse {
-    private final List<Part> buildingPartsWarehouse;
+    private final List<Part> buildingPartsStore;
 
     public PartsWarehouse () {
-        buildingPartsWarehouse = new ArrayList<>();
+
+        buildingPartsStore = new ArrayList<>();
     }
 
     public void addPart(Part newPart){
-        buildingPartsWarehouse.add(newPart);
+        buildingPartsStore.add(newPart);
     }
 
 
-    public List<Part> getBuildingPartsWarehouse() {
-        return Collections.unmodifiableList(buildingPartsWarehouse);
+    public List<Part> getBuildingPartsStore() {
+        return Collections.unmodifiableList(buildingPartsStore);
     }
 
 }

@@ -7,22 +7,19 @@ import java.util.List;
 
 //A repair is basically a report about a defect device. besides information on what happened, it also contains the needed and/or used spare parts.
 public class Repair {
-    private final Integer repairID;
     private final String repairCause;
     private String repairSolution;
     private final String repairInformation;
     private final LocalDate repairStartDate;
     private LocalDate repairFinishedDate;
     private Long repairDuration;
-    private String repairRepairman;
+    private final String repairRepairman;
     private boolean repairFinished;
-    private List reservedParts;
-    private List usedParts;
+    private final List reservedParts;
+    private final List usedParts;
 
         public Repair(String repairCause, String repairInformation, LocalDate repairStartDate, String repairRepairman){
-            Randomnator idGenerator = new Randomnator();
 
-            this.repairID = idGenerator.RandomnizerInt();
             this.repairCause = repairCause;
             this.repairInformation = repairInformation;
             this.repairStartDate = repairStartDate;
@@ -48,7 +45,6 @@ public class Repair {
     @Override
     public String toString() {
         return "Repair{" +
-                "repairID=" + repairID +
                 ", repairCause='" + repairCause + '\'' +
                 ", repairSolution='" + repairSolution + '\'' +
                 ", repairInformation='" + repairInformation + '\'' +
