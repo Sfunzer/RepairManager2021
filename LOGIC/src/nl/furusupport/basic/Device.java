@@ -7,8 +7,8 @@ import java.util.List;
 
 // a device can be anything that you can find in a building and can break.
 public class Device {
+
     private final String deviceName;
-    private final int deviceID;
     private final String deviceSerial;
 
     private int deviceAgeDays;
@@ -18,8 +18,7 @@ public class Device {
     private final String deviceLocation;
     private final List<Repair> deviceRepairs;
 
-    public Device(String deviceName, int deviceID, String deviceSerial, int deviceAgeDays, int deviceLifeSpan, LocalDate deviceEOL,  String deviceLocation){
-        //DeviceID generator.
+    public Device(String deviceName, String deviceSerial, int deviceAgeDays, int deviceLifeSpan, LocalDate deviceEOL,  String deviceLocation){
 
         //basic device details
         this.deviceName = deviceName;
@@ -31,7 +30,6 @@ public class Device {
         this.deviceEOL = deviceEOL;
 
         //storage data for this device
-        this.deviceID = deviceID;
         this.deviceLocation = deviceLocation;
 
         //List with device repairs.
@@ -39,41 +37,33 @@ public class Device {
     }
 
     //method used for adding a repair. Before adding, it checks device EOL date and Lifespan statistic, so if device is better of replacing, it'll let you know.
-    public String addRepair(Repair newRepair) {
+    public DeviceState addRepair(Repair newRepair) {
         LocalDate dateCheck = LocalDate.now();
-        String returnMessage;
+
         if (deviceEOL.isBefore(dateCheck) || deviceAgeDays >= deviceLifeSpan){
-                returnMessage = "Device is not viable anymore. please replace!";
-                return returnMessage;
+                return DeviceState.LIFESPANPASSED;
             }
         if (deviceRepairs.size() != 0){
-            returnMessage = "there are " + deviceRepairs.size() + " repairs linked to this device. Please check these while we add your repair for now";
             deviceRepairs.add(newRepair);
-            return returnMessage;
+            return DeviceState.OTHERREPAIRS;
         }
         deviceRepairs.add(newRepair);
-        returnMessage = "repair added";
-        return returnMessage;
+        return DeviceState.ADDED;
     }
 
-    public int getDeviceID() {
-        return deviceID;
+
+    public boolean checkDeviceEOLstatus() { //is true when EOL has passed || EOL = true
+        LocalDate dateCheck = LocalDate.now();
+        return deviceEOL.isBefore(dateCheck);
     }
+
+    public boolean checkDeviceLifeSpan() { // is true when max lifespan has passed
+        return deviceAgeDays >= deviceLifeSpan;
+    }
+
 
     public String getDeviceSerial() {
         return deviceSerial;
-    }
-
-    public int getDeviceAgeDays() {
-        return deviceAgeDays;
-    }
-
-    public int getDeviceLifeSpan() {
-        return deviceLifeSpan;
-    }
-
-    public LocalDate getDeviceEOL() {
-        return deviceEOL;
     }
 
     public List<Repair> getDeviceRepairs() {
@@ -94,13 +84,10 @@ public class Device {
                 ", deviceLocation='" + deviceLocation + '\'' +
                 //", deviceRepairs=" + deviceRepairs +
                 '}';
-
-
          */
        // return deviceName + " " + deviceID  + ""
 
         return deviceName + ',' +
-                deviceID + ',' +
                 deviceSerial + ',' +
                 deviceAgeDays + ',' +
                 deviceLifeSpan + ',' +
