@@ -2,6 +2,7 @@ package nl.furusupport.basic;
 
 //A building contains all devices installed. Repairs are kept within a device.
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,31 +12,37 @@ public class Building {
     private final int buildingID;
 
     private final List<Device> buildingDeviceStore;
-    private final PartsWarehouse buildingPartsWarehouse; //Todo rethink public position, perhaps initialise earlier.
+    private final PartsWarehouse buildingPartsWarehouse;
+
+    private final DataImport readData;
+    private final DataExport writeData;
 
     private Device updatableDevice;
     private int updatableDevicePosition;
 
-    //Class constructor
-    public Building(String buildingName, PartsWarehouse buildingPartsWarehouse) {
-
+      public Building(String buildingName, Integer buildingID, PartsWarehouse buildingPartsWarehouse, DataImport readData, DataExport writeData) throws IOException {
 
         buildingDeviceStore = new ArrayList<>();
         this.buildingPartsWarehouse = buildingPartsWarehouse;
 
         this.buildingName = buildingName;
-        this.buildingID = 12598;
+        this.buildingID = buildingID;
+
+        this.readData = readData;
+        this.writeData = writeData;
+
+        importDeviceData();
 
     }
 
-    //Adding parts to partswarehouse
+    //Adding parts to partswarehouse TODO this doesn't belong here.
     public void addPartToWarehouse(Part newPart){
         buildingPartsWarehouse.addPart(newPart);
     }
 
-    public DataState importDeviceData (ArrayList <Device> importedDataList){
+    private DataState importDeviceData () throws IOException {
         if (buildingDeviceStore.size() == 0){
-            buildingDeviceStore.addAll(importedDataList);
+            buildingDeviceStore.addAll(readData.importCSV());
             return DataState.IMPORT_SUCCEEDED;
         } else {
             return DataState.DATABASE_NOT_EMPTY;
@@ -76,7 +83,11 @@ public class Building {
     }
 
 
-    //TODO: rework method with SRP in mind
+    public void exportData() throws IOException {
+        writeData.writeCSVFile(buildingDeviceStore);
+    }
+
+    //TODO: rework method with SRP in mind, doesn't belong here.
     //method to add a repair. Repairs are stored within devices, so they are always linked.
 
     public DeviceState addRepairToDevice( String deviceSerial, Repair newDeviceRepair) {

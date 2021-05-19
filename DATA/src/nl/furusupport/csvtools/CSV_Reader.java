@@ -1,7 +1,7 @@
 package nl.furusupport.csvtools;
 
 import nl.furusupport.basic.Device;
-import nl.furusupport.basic.importCSV;
+import nl.furusupport.basic.DataImport;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,17 +11,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-public class DeviceImport implements importCSV {
+public class CSV_Reader implements DataImport {
     private final ArrayList importedDataList;
+    private final String fileName;
     //private DeviceBlock dataInput;
 
-    public DeviceImport() {
+    public CSV_Reader(String fileName) {
+        this.fileName = fileName + ".csv";
         importedDataList = new ArrayList();
 
     }
 
-        public ArrayList importCSV(String fileName) throws IOException {
-        fileName = fileName + ".csv";
+        public ArrayList importCSV() throws IOException {
+        //fileName = fileName + ".csv";
 
         String row;
         String[] data;
