@@ -35,11 +35,6 @@ public class Building {
 
     }
 
-    //Adding parts to partswarehouse TODO this doesn't belong here.
-    public void addPartToWarehouse(Part newPart){
-        buildingPartsWarehouse.addPart(newPart);
-    }
-
     private DataState importDeviceData () throws IOException {
         if (buildingDeviceStore.size() == 0){
             buildingDeviceStore.addAll(readData.importCSV());
@@ -83,21 +78,7 @@ public class Building {
     }
 
 
-    public void exportData() throws IOException {
-        writeData.writeCSVFile(buildingDeviceStore);
-    }
-
-    //TODO: rework method with SRP in mind, doesn't belong here.
-    //method to add a repair. Repairs are stored within devices, so they are always linked.
-
-    public DeviceState addRepairToDevice( String deviceSerial, Repair newDeviceRepair) {
-        for (Device whichDevice:buildingDeviceStore) {
-            if (whichDevice.getDeviceSerial().equals(deviceSerial)) {
-                return whichDevice.addRepair(newDeviceRepair);
-            }
-        }
-        return  DeviceState.DEVICE_NOT_IN_SYSTEM;
-    }
+    public void exportData() throws IOException { writeData.writeCSVFile(buildingDeviceStore); }
 
 
     public List<Device> getBuildingDeviceStore() {
@@ -114,31 +95,24 @@ public class Building {
     }
 
 
-    public String setUpdatableDevice (String serialNumber) { //needed?
+       /* public void getUpdatableDevice (String serialNumber) { //TODO perhaps we can recode this to get/store a serialnumber with simple integer selection.
         for (Device searchedDevice : buildingDeviceStore) {
             if (searchedDevice.getDeviceSerial().equals(serialNumber)){
-                updatableDevice = searchedDevice;
-                updatableDevicePosition = buildingDeviceStore.indexOf(searchedDevice);
-                return updatableDevice.toString() + "\n position in array: " + updatableDevicePosition;
+
+                //updatableDevice = searchedDevice;
+                //updatableDevicePosition = buildingDeviceStore.indexOf(searchedDevice);
+
+                //return updatableDevice.toString() + "\n position in array: " + updatableDevicePosition;
             }
         }
         return "no match";
     }
-
-    // TODO finish method, perhaps with repair option.
-    public DeviceState updateDevice (Repair newRepair) {
-        return updatableDevice.addRepair(newRepair);
-    }
-
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public int getBuildingID() {
-        return buildingID;
-    }
+    */
 
 
+    public String getBuildingName() { return buildingName; }
+
+    public int getBuildingID() { return buildingID; }
 
     @Override
     public String toString() {

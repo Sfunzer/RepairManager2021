@@ -23,13 +23,28 @@ public class Main {
         plazaTheatre = new Building("Plaza Theatre",12598, plazaParts, new CSV_Reader("plazatest"), new CSV_Writer("plazatest"));
 
         baseUI = new repairManagerMainUI(plazaTheatre);
+        baseUI.startUI();
 
+
+        //From here on out we need to remove stuff, as this is now only used for testing.
 
         //CSVReader = new CSV_Reader(plazaTheatre.getBuildingName());
         //CSVWriter = new CSV_Writer(plazaTheatre.getBuildingName());
 
+        /*
+        System.out.println(plazaTheatre.getDevice("XGA678").addRepair(new Repair("Some dude did something", "needs to be reinstalled", LocalDate.of(2022,02,01),"Dude26")));
 
-        baseUI.startUI();
+        dataPrinter(plazaTheatre.getDevice("XGA678").getDeviceRepairs());
+
+        plazaTheatre.getDevice("XGA678").getLastrepair().setRepairFinished(LocalDate.now());
+
+        dataPrinter(plazaTheatre.getDevice("XGA678").getDeviceRepairs());
+
+
+         */
+
+
+
 
 
         //System.out.println(plazaTheatre.importDeviceData(CSVReader.importCSV()));
@@ -46,9 +61,11 @@ public class Main {
         System.out.println(plazaTheatre.addDeviceToStore(new Device("Logitech Magic Mouse","$%FGJ", 0, 10, LocalDate.of(2022, 4, 1), "Boardroom")));
         System.out.println(plazaTheatre.addDeviceToStore(new Device("Logitech Magic Mouse","$%GJ", 0, 10, LocalDate.of(2023, 4, 1), "Boardroom")));
         System.out.println(plazaTheatre.addDeviceToStore(new Device("RME Digiface Dante","6464564XHT", 366, 3654, LocalDate.of(2035, 1, 1), "Sven's BackPack")));
+
         //adding some parts
         plazaTheatre.addPartToWarehouse(new Part("Screw", "Xo7987", "only if you're screwed"));
         plazaTheatre.addPartToWarehouse(new Part("Cat5 cable", "C5-EX", "Basically just the stuff!"));
+
         //Printing out some overviews from stuff available within the application.
         System.out.println("\nDevices:");
         dataPrinter(plazaTheatre.getBuildingDeviceStore());
