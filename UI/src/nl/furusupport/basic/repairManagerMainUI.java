@@ -6,13 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static java.lang.Runtime.*;
-
 public class repairManagerMainUI {
     private Scanner inputScan;
 
     private Integer menuChoice;
-    private Boolean loopCheck;
 
     private final Building currentBuilding;
 
@@ -22,19 +19,17 @@ public class repairManagerMainUI {
 
         this.currentBuilding = currentBuilding;
 
-        loopCheck = false;
         menuChoice = 0;
 
-        menuFields = new ArrayList();
+        menuFields = new ArrayList<>();
         menuFields.add("Quit");
         menuFields.add("View Building");
         menuFields.add("View all Devices");
         menuFields.add("Add Device");
         menuFields.add("Save DeviceList");
         menuFields.add("Add Repair to Device");
-        menuFields.add("Show specific Devicerepairs");
+        menuFields.add("Show specific Device Repairs");
         }
-
 
 
 
@@ -45,8 +40,6 @@ public class repairManagerMainUI {
 
     private void setUpUI(){
         System.out.println("RepairManager 2021\n\n");
-
-
     }
 
     private void selectOption() throws IOException {
@@ -100,16 +93,15 @@ public class repairManagerMainUI {
         String name = inputScan.nextLine();
         System.out.println("SerialNumber:");
         String serial = inputScan.nextLine();
-        System.out.println("Agedays:");
+        System.out.println("Current age days of device:");
         int ageDays = inputScan.nextInt();
-        System.out.println("LifeSpan:");
+        System.out.println("How many days should the device last?");
         int lifeSpan = inputScan.nextInt();
         inputScan.nextLine();
-        System.out.println("EOL Date:");
+        System.out.println("On which date does the device life expectancy end?");
         String eol = inputScan.nextLine();
         System.out.println("Location");
         String location = inputScan.nextLine();
-
 
         System.out.println(currentBuilding.addDeviceToStore(new Device(name, serial, ageDays, lifeSpan, LocalDate.parse(eol), location)));
     }
@@ -124,12 +116,12 @@ public class repairManagerMainUI {
         String cause = inputScan.nextLine();
         System.out.println("Enter info:");
         String info = inputScan.nextLine();
-        System.out.println("Enter repair start date:");
-        String startdate = inputScan.nextLine();
+        System.out.println("Enter date of repair start:");
+        String startDate = inputScan.nextLine();
         System.out.println("Enter your name:");
         String name = inputScan.nextLine();
 
-        System.out.println(currentBuilding.getDevice(nextSerial).addRepair(new Repair(cause, info, LocalDate.parse(startdate), name)));
+        System.out.println(currentBuilding.getDevice(nextSerial).addRepair(new Repair(cause, info, LocalDate.parse(startDate), name)));
     }
 
     private void showDeviceRepairs() {

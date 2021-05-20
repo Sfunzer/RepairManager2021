@@ -6,7 +6,7 @@ import java.util.List;
 
 
 
-public interface DataImport {
+public interface DataImportDevice {
 
-    public List importCSV () throws IOException;
+    List<Device> importCSV() throws IOException;
 }

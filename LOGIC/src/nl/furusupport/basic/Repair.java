@@ -14,8 +14,8 @@ public class Repair {
     private Long repairDuration;
     private final String repairRepairman;
     private boolean repairFinished;
-    private final List reservedParts;
-    private final List usedParts;
+    private final List<Part> reservedParts;
+    private final List<Part> usedParts;
 
         public Repair(String repairCause, String repairInformation, LocalDate repairStartDate, String repairRepairman){
 
@@ -26,15 +26,12 @@ public class Repair {
 
             repairFinished = false;
 
-            reservedParts = new ArrayList();
-            usedParts = new ArrayList();
-
+            reservedParts = new ArrayList<>();
+            usedParts = new ArrayList<>();
         }
 
 
-    public void setRepairSolution(String repairSolution) {
-        this.repairSolution = repairSolution;
-    }
+    public void setRepairSolution(String repairSolution) { this.repairSolution = repairSolution; }
 
     public void setRepairFinished(LocalDate repairFinishedDate) {
         this.repairFinishedDate = repairFinishedDate;

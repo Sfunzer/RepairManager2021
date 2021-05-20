@@ -1,6 +1,5 @@
 package nl.furusupport.basic;
 
-//A part is a piece that can be used to repair certain devices.
 public class Part {
     private final String partName;
     private final String partNumber;
@@ -8,11 +7,9 @@ public class Part {
 
 
     public Part (String partName, String partSupplierNumber, String partInfo){
-
         this.partName = partName;
         this.partNumber = partSupplierNumber;
         this.partInfo = partInfo;
-
     }
 
     @Override
