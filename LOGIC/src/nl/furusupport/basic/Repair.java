@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-//A repair is basically a report about a defect device. besides information on what happened, it also contains the needed and/or used spare parts.
 public class Repair {
     private final String repairCause;
     private String repairSolution;
@@ -37,9 +36,10 @@ public class Repair {
         this.repairSolution = repairSolution;
     }
 
-    public void setRepairFinished(LocalDate repairFinishedDate) {  //TODO rework so the boolean will set as well
+    public void setRepairFinished(LocalDate repairFinishedDate) {
         this.repairFinishedDate = repairFinishedDate;
-        repairDuration = ChronoUnit.HOURS.between(repairStartDate, this.repairFinishedDate);
+        repairDuration = ChronoUnit.DAYS.between(repairStartDate, this.repairFinishedDate);
+        repairFinished = true;
     }
 
     @Override
@@ -53,12 +53,8 @@ public class Repair {
                 ", repairDuration=" + repairDuration +
                 ", repairRepairman='" + repairRepairman + '\'' +
                 ", repairFinished=" + repairFinished +
-                ", reservedParts=" + reservedParts +
-                ", usedParts=" + usedParts +
                 '}';
     }
 }
-
-//TODO Class needs further functional implementation.
 
 

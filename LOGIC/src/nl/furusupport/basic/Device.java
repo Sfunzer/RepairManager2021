@@ -61,9 +61,17 @@ public class Device {
         return deviceAgeDays >= deviceLifeSpan;
     }
 
+    public Repair getLastrepair() {
+        return deviceRepairs.get(deviceRepairs.size() - 1);
+    }
+
 
     public String getDeviceSerial() {
         return deviceSerial;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
     }
 
     public List<Repair> getDeviceRepairs() {
@@ -72,21 +80,6 @@ public class Device {
 
     @Override
     public String toString() {
-
-        //ToDo rework toString format so it will nicely work with .csv read/write
-        /*return "Device{" +
-                "deviceName='" + deviceName + '\'' +
-                ", deviceID=" + deviceID +
-                ", deviceSerial='" + deviceSerial + '\'' +
-                ", deviceAgeDays=" + deviceAgeDays +
-                ", deviceLifeSpan=" + deviceLifeSpan +
-                ", deviceEOL=" + deviceEOL +
-                ", deviceLocation='" + deviceLocation + '\'' +
-                //", deviceRepairs=" + deviceRepairs +
-                '}';
-         */
-       // return deviceName + " " + deviceID  + ""
-
         return deviceName + ',' +
                 deviceSerial + ',' +
                 deviceAgeDays + ',' +
