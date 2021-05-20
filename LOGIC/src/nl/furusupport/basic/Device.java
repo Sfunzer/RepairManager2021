@@ -11,7 +11,7 @@ public class Device {
     private final String deviceName;
     private final String deviceSerial;
 
-    private int deviceAgeDays;
+    private final int deviceAgeDays;
     private final int deviceLifeSpan;
     private final LocalDate deviceEOL;
 
@@ -52,7 +52,7 @@ public class Device {
     }
 
 
-    public boolean checkDeviceEOLstatus() { //is true when EOL has passed || EOL = true
+    public boolean checkDeviceEOL_status() { //is true when EOL has passed || EOL = true
         LocalDate dateCheck = LocalDate.now();
         return deviceEOL.isBefore(dateCheck);
     }
@@ -61,7 +61,7 @@ public class Device {
         return deviceAgeDays >= deviceLifeSpan;
     }
 
-    public Repair getLastrepair() {
+    public Repair getLastRepair() {
         return deviceRepairs.get(deviceRepairs.size() - 1);
     }
 
