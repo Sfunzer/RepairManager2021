@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// a device can be anything that you can find in a building and can break.
 public class Device {
 
     private final String deviceName;
@@ -20,23 +19,18 @@ public class Device {
 
     public Device(String deviceName, String deviceSerial, int deviceAgeDays, int deviceLifeSpan, LocalDate deviceEOL,  String deviceLocation){
 
-        //basic device details
         this.deviceName = deviceName;
         this.deviceSerial = deviceSerial;
 
-        //lifecycle info for this device
         this.deviceAgeDays = deviceAgeDays;
         this.deviceLifeSpan = deviceLifeSpan;
         this.deviceEOL = deviceEOL;
 
-        //storage data for this device
         this.deviceLocation = deviceLocation;
 
-        //List with device repairs.
         deviceRepairs = new ArrayList<>();
     }
-
-    //method used for adding a repair. Before adding, it checks device EOL date and Lifespan statistic, so if device is better of replacing, it'll let you know.
+    //TODO: Insert devicecheckers over here.
     public DeviceState addRepair(Repair newRepair) {
         LocalDate dateCheck = LocalDate.now();
 
@@ -52,19 +46,9 @@ public class Device {
     }
 
 
-    public boolean checkDeviceEOL_status() { //is true when EOL has passed || EOL = true
-        LocalDate dateCheck = LocalDate.now();
-        return deviceEOL.isBefore(dateCheck);
-    }
-
-    public boolean checkDeviceLifeSpan() { // is true when max lifespan has passed
-        return deviceAgeDays >= deviceLifeSpan;
-    }
-
     public Repair getLastRepair() {
         return deviceRepairs.get(deviceRepairs.size() - 1);
     }
-
 
     public String getDeviceSerial() {
         return deviceSerial;
@@ -74,9 +58,18 @@ public class Device {
         return deviceName;
     }
 
-    public List<Repair> getDeviceRepairs() {
-        return Collections.unmodifiableList(deviceRepairs);
+    public List<Repair> getDeviceRepairs() { return Collections.unmodifiableList(deviceRepairs); }
+
+    public int getDeviceAgeDays() { return deviceAgeDays; }
+
+    public int getDeviceLifeSpan() {
+        return deviceLifeSpan;
     }
+
+    public LocalDate getDeviceEOL() {
+        return deviceEOL;
+    }
+
 
     @Override
     public String toString() {

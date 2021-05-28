@@ -1,14 +1,14 @@
 package nl.furusupport.csvtools;
 
 
-import nl.furusupport.basic.DataExportDevice;
+import nl.furusupport.basic.DataExporter_Device;
 import nl.furusupport.basic.Device;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class CSV_Writer implements DataExportDevice {
+public class CSV_Writer implements DataExporter_Device {
     public final String fileName;
 
     public CSV_Writer(String fileName){
@@ -16,7 +16,7 @@ public class CSV_Writer implements DataExportDevice {
 
     }
 
-    public void writeCSVFile(List<Device> dataStore) throws IOException {
+    public void writeDataToExternal(List<Device> dataStore) throws IOException {
         //fileName = fileName + ".csv";
 
         FileWriter csvWriter = new FileWriter(fileName);

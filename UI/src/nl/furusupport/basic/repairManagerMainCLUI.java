@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class repairManagerMainUI {
+public class repairManagerMainCLUI {
     private Scanner inputScan;
 
     private Integer menuChoice;
@@ -15,7 +15,7 @@ public class repairManagerMainUI {
 
     private final List<String> menuFields;
 
-    public repairManagerMainUI(Building currentBuilding){
+    public repairManagerMainCLUI(Building currentBuilding){
 
         this.currentBuilding = currentBuilding;
 
@@ -64,7 +64,7 @@ public class repairManagerMainUI {
                     enterDeviceData();
                     afterSelection();
                 case 4:
-                    currentBuilding.exportData();
+                    System.out.println(currentBuilding.exportData());
                     afterSelection();
                 case 5:
                     addRepairToDevice();
