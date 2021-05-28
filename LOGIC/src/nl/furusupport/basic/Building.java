@@ -14,10 +14,14 @@ public class Building {
     private final List<Device> buildingDeviceStore;
     private final PartsWarehouse buildingPartsWarehouse;
 
-    private final DataImportDevice readData;
-    private final DataExportDevice writeData;
+    private final DataImporter_Device readData;
+    private final DataExporter_Device writeData;
 
-      public Building(String buildingName, Integer buildingID, PartsWarehouse buildingPartsWarehouse, DataImportDevice readData, DataExportDevice writeData) throws IOException {
+    private PropertyChecker serialCheck;
+    private PropertyChecker eolCheck;
+    private PropertyChecker lifeSpanCheck;
+
+      public Building(String buildingName, Integer buildingID, PartsWarehouse buildingPartsWarehouse, DataImporter_Device readData, DataExporter_Device writeData) throws IOException {
 
         buildingDeviceStore = new ArrayList<>();
         this.buildingPartsWarehouse = buildingPartsWarehouse;
@@ -29,43 +33,40 @@ public class Building {
         this.writeData = writeData;
 
           importDeviceData();
+
     }
 
     //TODO Return value isn't used. Lets see if we can fix that.
     private DataState importDeviceData () throws IOException {
         if (buildingDeviceStore.size() == 0){
-            buildingDeviceStore.addAll(readData.importCSV());
+            buildingDeviceStore.addAll(readData.importDataFromExternal());
             return DataState.IMPORT_SUCCEEDED;
         } else {
             return DataState.DATABASE_NOT_EMPTY;
         }
     }
 
-    //TODO Method contains duplicate code which i'm quite sure is not necessary. Next step is getting rid of the multiple if-else statements.
     public DeviceState addDeviceToStore(Device newDevice) {
-        if (buildingDeviceStore.size() == 0) {
 
-            if (newDevice.checkDeviceEOL_status()) {
-                return DeviceState.ENDOFLIFE;
-            } else if (newDevice.checkDeviceLifeSpan()){
-                return DeviceState.LIFESPANPASSED;
-            }
-        } else {
-            for (Device deviceChecker : buildingDeviceStore) {
-                if (deviceChecker.getDeviceSerial().equals(newDevice.getDeviceSerial())) {
-                    return DeviceState.DUPLICATESERIAL;
-                } else if (newDevice.checkDeviceEOL_status()){
-                    return DeviceState.ENDOFLIFE;
-                } else if (newDevice.checkDeviceLifeSpan()){
-                    return DeviceState.LIFESPANPASSED;
-                }
+          //TODO: Create a class to instantiate a complete checkList.
+          List<PropertyChecker> checkList = new ArrayList();
+          checkList.add(serialCheck);
+          checkList.add(eolCheck);
+          checkList.add(lifeSpanCheck);
+
+        for (PropertyChecker deviceCheck:checkList) {
+            if (!deviceCheck.check(newDevice).equals(DeviceState.DEVICETEST_PASSED)){
+                return deviceCheck.check(newDevice);
             }
         }
         buildingDeviceStore.add(newDevice);
         return DeviceState.ADDED;
     }
 
-    public void exportData() throws IOException { writeData.writeCSVFile(buildingDeviceStore); }
+    public DataState exportData() throws IOException {
+          writeData.writeDataToExternal(buildingDeviceStore);
+          return DataState.DATAEXPORT_SUCCESFULL;
+      }
 
     public List<Device> getBuildingDeviceStore() {
         return  Collections.unmodifiableList(buildingDeviceStore);
@@ -78,6 +79,13 @@ public class Building {
             }
         }
         return null;
+    }
+
+    public void setDeviceCheckers(PropertyChecker serialCheck, PropertyChecker eolCheck, PropertyChecker lifeSpanCheck) {
+          this.serialCheck = serialCheck;
+          this.eolCheck = eolCheck;
+          this.lifeSpanCheck = lifeSpanCheck;
+
     }
 
     @Override
