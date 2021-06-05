@@ -17,6 +17,8 @@ public class Device {
     private final String deviceLocation;
     private final List<Repair> deviceRepairs;
 
+    private List<PropertyChecker> checkList;
+
     public Device(String deviceName, String deviceSerial, int deviceAgeDays, int deviceLifeSpan, LocalDate deviceEOL,  String deviceLocation){
 
         this.deviceName = deviceName;
@@ -29,6 +31,7 @@ public class Device {
         this.deviceLocation = deviceLocation;
 
         deviceRepairs = new ArrayList<>();
+
     }
     //TODO: Insert devicecheckers over here.
     public DeviceState addRepair(Repair newRepair) {
@@ -68,6 +71,10 @@ public class Device {
 
     public LocalDate getDeviceEOL() {
         return deviceEOL;
+    }
+
+    public void setCheckList(List<PropertyChecker> checkList) {
+        this.checkList = checkList;
     }
 
 

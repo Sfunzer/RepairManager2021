@@ -11,11 +11,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-public class CSV_Reader implements DataImporter_Device {
+public class CSV_ReaderDevice implements DataImporter_Device {
     private final ArrayList<Device> importedDataList;
     private final String fileName;
 
-    public CSV_Reader(String fileName) {
+    public CSV_ReaderDevice(String fileName) {
         this.fileName = fileName + ".csv";
         importedDataList = new ArrayList<>();
     }
