@@ -98,7 +98,7 @@ public class repairManagerMainCLUI {
         System.out.println("How many days should the device last?");
         int lifeSpan = inputScan.nextInt();
         inputScan.nextLine();
-        System.out.println("On which date does the device life expectancy end?");
+        System.out.println("On which date does the device life expectancy end? Dateformat is: YYYY-MM-DD");
         String eol = inputScan.nextLine();
         System.out.println("Location");
         String location = inputScan.nextLine();
@@ -116,7 +116,7 @@ public class repairManagerMainCLUI {
         String cause = inputScan.nextLine();
         System.out.println("Enter info:");
         String info = inputScan.nextLine();
-        System.out.println("Enter date of repair start:");
+        System.out.println("Enter date of repair start: Dateformat is: YYYY-MM-DD");
         String startDate = inputScan.nextLine();
         System.out.println("Enter your name:");
         String name = inputScan.nextLine();
