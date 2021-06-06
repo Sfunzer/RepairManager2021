@@ -1,7 +1,5 @@
 package nl.furusupport.basic;
 
-//A building contains all devices installed. Repairs are kept within a device.
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -13,15 +11,14 @@ public class Building {
 
     private final List<Device> buildingDeviceStore;
     private final PartsWarehouse buildingPartsWarehouse;
+    private List<PropertyChecker> checkList;
 
-    private final DataImporter_Device readData;
-    private final DataExporter_Device writeData;
+    private final DataImporter_Device readerData;
+    private final DataExporter_Device writerData;
 
-    private PropertyChecker serialCheck;
-    private PropertyChecker eolCheck;
-    private PropertyChecker lifeSpanCheck;
 
-      public Building(String buildingName, Integer buildingID, PartsWarehouse buildingPartsWarehouse, DataImporter_Device readData, DataExporter_Device writeData) throws IOException {
+
+      public Building(String buildingName, Integer buildingID, PartsWarehouse buildingPartsWarehouse, DataImporter_Device readerData, DataExporter_Device writerData) throws IOException {
 
         buildingDeviceStore = new ArrayList<>();
         this.buildingPartsWarehouse = buildingPartsWarehouse;
@@ -29,42 +26,28 @@ public class Building {
         this.buildingName = buildingName;
         this.buildingID = buildingID;
 
-        this.readData = readData;
-        this.writeData = writeData;
+        this.readerData = readerData;
+        this.writerData = writerData;
 
           importDeviceData();
 
     }
 
-    //TODO Return value isn't used. Lets see if we can fix that.
-    private DataState importDeviceData () throws IOException {
-        if (buildingDeviceStore.size() == 0){
-            buildingDeviceStore.addAll(readData.importDataFromExternal());
-            return DataState.IMPORT_SUCCEEDED;
-        } else {
-            return DataState.DATABASE_NOT_EMPTY;
-        }
-    }
+    private void importDeviceData () throws IOException { buildingDeviceStore.addAll(readerData.importDataFromExternal()); }
 
     public DeviceState addDeviceToStore(Device newDevice) {
-
-          //TODO: Create a class to instantiate a complete checkList.
-          List<PropertyChecker> checkList = new ArrayList();
-          checkList.add(serialCheck);
-          checkList.add(eolCheck);
-          checkList.add(lifeSpanCheck);
-
         for (PropertyChecker deviceCheck:checkList) {
             if (!deviceCheck.check(newDevice).equals(DeviceState.DEVICETEST_PASSED)){
                 return deviceCheck.check(newDevice);
             }
         }
+        newDevice.setCheckList(checkList);
         buildingDeviceStore.add(newDevice);
         return DeviceState.ADDED;
     }
 
     public DataState exportData() throws IOException {
-          writeData.writeDataToExternal(buildingDeviceStore);
+          writerData.writeDataToExternal(buildingDeviceStore);
           return DataState.DATAEXPORT_SUCCESFULL;
       }
 
@@ -81,10 +64,8 @@ public class Building {
         return null;
     }
 
-    public void setDeviceCheckers(PropertyChecker serialCheck, PropertyChecker eolCheck, PropertyChecker lifeSpanCheck) {
-          this.serialCheck = serialCheck;
-          this.eolCheck = eolCheck;
-          this.lifeSpanCheck = lifeSpanCheck;
+    public void setDeviceChecklist(List<PropertyChecker> checkList) {
+         this.checkList = checkList;
 
     }
 

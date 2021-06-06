@@ -8,16 +8,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class CSV_Writer implements DataExporter_Device {
+public class CSV_WriterDevice implements DataExporter_Device {
     public final String fileName;
 
-    public CSV_Writer(String fileName){
+    public CSV_WriterDevice(String fileName){
         this.fileName = fileName + ".csv";
 
     }
 
     public void writeDataToExternal(List<Device> dataStore) throws IOException {
-        //fileName = fileName + ".csv";
 
         FileWriter csvWriter = new FileWriter(fileName);
 
