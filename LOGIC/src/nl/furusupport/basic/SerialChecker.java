@@ -11,17 +11,11 @@ public class SerialChecker implements PropertyChecker {
 
     @Override
     public DeviceState check(Device checkableDevice) {
-        for (Device deviceFromList:deviceList) {
-            if (checkableDevice.getDeviceSerial().equals(deviceFromList.getDeviceSerial())){
+        for (Device deviceFromList : deviceList) {
+            if (checkableDevice.getDeviceSerial().equals(deviceFromList.getDeviceSerial())) {
                 return DeviceState.DUPLICATESERIAL;
             }
-
         }
-      return DeviceState.DEVICETEST_PASSED;
-    }
-    //TODO This doesn't work. Why?!
-    public void setDeviceList(List<Device> deviceList) {
-        this.deviceList = deviceList;
+        return DeviceState.DEVICETEST_PASSED;
     }
 }
-

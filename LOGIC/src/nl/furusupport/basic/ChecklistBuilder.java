@@ -6,8 +6,6 @@ import java.util.List;
 
 public class ChecklistBuilder {
 
-
-
     private final List<PropertyChecker> internalChecklist;
     private final List<Device> internalDeviceList;
 
@@ -19,7 +17,6 @@ public class ChecklistBuilder {
         internalChecklist.add(new SerialChecker(internalDeviceList));
         internalChecklist.add(new EOLChecker());
         internalChecklist.add(new LifeSpanChecker());
-
     }
 
     public List<PropertyChecker> getChecklist() {

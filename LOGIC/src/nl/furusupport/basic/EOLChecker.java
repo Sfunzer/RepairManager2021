@@ -10,4 +10,6 @@ public class EOLChecker implements PropertyChecker {
             return DeviceState.DEVICETEST_PASSED;
         } return DeviceState.ENDOFLIFEREACHED;
     }
+
+
 }
